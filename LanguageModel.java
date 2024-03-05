@@ -65,16 +65,16 @@ public class LanguageModel {
         }
         int totalCount = 0;
         while (iterator.hasNext()) {
-            CharData current = iterator.next();
-            totalCount += current.count;
+            CharData curr = iterator.next();
+            totalCount += curr.count;
         }
         iterator = new ListIterator(probs.getFirstNode());
         double prev = 0;
         while (iterator.hasNext()) {
-            CharData current = iterator.next();
-            current.p = ((double)current.count) / totalCount;
-            current.cp = current.p + prev;
-            prev = current.cp;
+            CharData curr = iterator.next();
+            curr.p = ((double)curr.count) / totalCount;
+            curr.cp = curr.p + prev;
+            prev = curr.cp;
         }
     }
 
