@@ -1,3 +1,5 @@
+import org.w3c.dom.Node;
+
 /** A linked list of character data objects.
  *  (Actually, a list of Node objects, each holding a reference to a character data object.
  *  However, users of this class are not aware of the Node objects. As far as they are concerned,
@@ -29,40 +31,94 @@ public class List {
 
     /** GIVE Adds a CharData object with the given character to the beginning of this list. */
     public void addFirst(char chr) {
-        // Your code goes here
+        CharData charData = new CharData(chr);
+        Node newNode = new Node(charData);
+        newNode.next = first;
+        first = newNode;
+        size++;
     }
     
     /** GIVE Textual representation of this list. */
     public String toString() {
-        // Your code goes here
+        if (size == 0) {
+            return "()";
+        }
+        String result = "(";
+        Node currNode = first;
+        while (currNode != null) {
+            result += currNode.cp.toString() + " ";
+            currNode = currNode.next;
+        }
+        if (result.length() > 1) {
+            result = result.substring(0, result.length() - 1);
+        }
+        result += ")";
+        return result;
     }
 
     /** Returns the index of the first CharData object in this list
      *  that has the same chr value as the given char,
      *  or -1 if there is no such object in this list. */
     public int indexOf(char chr) {
-        // Your code goes here
+        Node current = first;
+        int index = 0;
+        while (current != null) {
+            if (current.cp.chr == chr) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
+        return -1;
     }
 
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
      *  given chr to the beginning of this list. */
     public void update(char chr) {
-        // Your code goes here
+        int charIndex = indexOf(chr);
+        if (charIndex != -1) { 
+            Node currNode = first;
+            while (currNode != null) {
+                if (currNode.cp.chr == chr) {
+                    currNode.cp.count++;
+                }
+                currNode = currNode.next;
+            }
+        } else { // if the character isn't found, add it to the beginning
+            addFirst(chr);
+        }
     }
 
     /** GIVE If the given character exists in one of the CharData objects
      *  in this list, removes this CharData object from the list and returns
      *  true. Otherwise, returns false. */
     public boolean remove(char chr) {
-        // Your code goes here
+        Node prev = null;
+        Node curr = first;
+        while (curr != null) {
+            if (curr.cp.chr == chr) {
+                if (prev != null) {
+                    prev.next = curr.next;
+                } else {
+                    first = curr.next;
+                }
+                size--;
+                return true;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+        return false;
     }
 
     /** Returns the CharData object at the specified index in this list. 
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
-        // Your code goes here
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
