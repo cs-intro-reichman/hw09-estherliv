@@ -1,3 +1,7 @@
+import java.util.ListIterator;
+
+import org.w3c.dom.Node;
+
 /** A linked list of character data objects.
  *  (Actually, a list of Node objects, each holding a reference to a character data object.
  *  However, users of this class are not aware of the Node objects. As far as they are concerned,
@@ -22,6 +26,10 @@ public class List {
  	      return size;
     }
 
+    public Node getFirstNode(){
+        return first;
+    }
+    
     /** Returns the first element in the list */
     public CharData getFirst() {
         return first.cp;

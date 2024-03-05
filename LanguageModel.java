@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class LanguageModel {
@@ -36,21 +37,21 @@ public class LanguageModel {
 		String window = "";
         char c;
         In in = new In(fileName);
-        for (int i = 0; i < windowLength; i++) { 
-            char temp = in.readChar();
-            window += temp;
+        for (int i = 0; i < windowLength; i++){ 
+        char temp  = in.readChar();
+        window += temp;
         }
-        while (!in.isEmpty()) {
+        while (!in.isEmpty()){
             c = in.readChar();
             List probs = CharDataMap.get(window);
-            if (probs == null) {
-                probs = new List();
-                CharDataMap.put(window, probs);
-            }
-            probs.update(c);
-            window = (window + c).substring(1);
+                if (probs == null) {
+            probs = new List();
+            CharDataMap.put(window, probs);
         }
-        for (List probs : CharDataMap.values()) {
+        probs.update(c);
+        window = (window + c).substring(1);
+        }
+        for (List probs : CharDataMap.values()){
             calculateProbabilities(probs);
         }
     }
