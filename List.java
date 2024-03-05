@@ -119,16 +119,21 @@ public class List {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+        Node current = first;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.cp;
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
     public CharData[] toArray() {
-	    CharData[] arr = new CharData[size];
-	    Node current = first;
-	    int i = 0;
+        CharData[] arr = new CharData[size];
+        Node current = first;
+        int i = 0;
         while (current != null) {
-    	    arr[i++]  = current.cp;
-    	    current = current.next;
+            arr[i++] = current.cp;
+            current = current.next;
         }
         return arr;
     }
