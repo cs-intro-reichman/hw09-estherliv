@@ -1,7 +1,3 @@
-import java.util.ListIterator;
-
-import org.w3c.dom.Node;
-
 /**
  * A linked list of character data objects.
  * (Actually, a list of Node objects, each holding a reference to a character
@@ -41,21 +37,20 @@ public class List {
      * list.
      */
     public void addFirst(char chr) {
-        CharData newCharData = new CharData(chr);
-        Node newNode = new Node(newCharData, this.first);
-        this.first = newNode;
+        Node newNode = new Node(new CharData(chr), first);
+        first = newNode;
         size++;
     }
 
     /** GIVE Textual representation of this list. */
     public String toString() {
-        Node curr = first;
-        StringBuilder str = new StringBuilder("(");
-        while (curr != null) {
-            str.append(current + " ");
-            curr = curr.next;
+        Node current = first;
+        StringBuilder sb = new StringBuilder("(");
+        while (current != null) {
+            sb.append(current + " ");
+            current = current.next;
         }
-        return str.substring(0, str.length() - 1)+ ")";
+        return sb.substring(0, sb.length() - 1)+ ")";
     }
 
     /**
@@ -64,16 +59,16 @@ public class List {
      * or -1 if there is no such object in this list.
      */
     public int indexOf(char chr) {
-        Node curr = first;
+        Node current = first;
         int index = 0;
-        while (curr != null) {
-            if (curr.cp.chr == chr) {
+        while (current != null) {
+            if (current.cp.equals(chr)) {
                 return index;
             }
-            curr = curr.next;
+            current = current.next;
             index++;
         }
-        return -1;
+        return -1; // value not found
     }
 
     /**
@@ -96,20 +91,20 @@ public class List {
      * true. Otherwise, returns false.
      */
     public boolean remove(char chr) {
-        Node prev = null, curr = first;
-        if (curr == chr) {
+        Node prev = null, current = first;
+        if (current.equals(chr)) {
             first = first.next;
             size--;
             return true;
         }
-        while (curr != null && curr != chr) {
-            prev = curr;
-            curr = curr.next;
+        while (current != null && !current.equals(chr)) {
+            prev = current;
+            current = current.next;
         }
-        if (curr == null) {
-            return false; 
+        if (current == null) {
+            return false; // value to remove was not found
         }
-        prev.next = curr.next;
+        prev.next = current.next;
         size--;
         return true;
     }
@@ -123,11 +118,13 @@ public class List {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node curr = first;
+
+        Node current = first;
         for (int i = 0; i < index; i++) {
-            curr = curr.next;
+            current = current.next;
         }
-        return curr.cp;
+
+        return current.cp;
     }
 
     /**
@@ -135,14 +132,14 @@ public class List {
      * this list.
      */
     public CharData[] toArray() {
-        CharData[] array = new CharData[size];
-        Node curr = first;
+        CharData[] arr = new CharData[size];
+        Node current = first;
         int i = 0;
-        while (curr != null) {
-            array[i++] = curr.cp;
-            curr = curr.next;
+        while (current != null) {
+            arr[i++] = current.cp;
+            current = current.next;
         }
-        return array;
+        return arr;
     }
 
     /**
