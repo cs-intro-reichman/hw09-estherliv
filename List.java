@@ -135,7 +135,7 @@ public class List {
         Node curr = first;
         int i = 0;
         while (curr != null) {
-            arr[i++] = curr.cp;
+            array[i++] = curr.cp;
             curr = curr.next;
         }
         return array;
